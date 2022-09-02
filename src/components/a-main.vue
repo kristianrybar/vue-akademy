@@ -1,22 +1,19 @@
 <template>
 <div class="container">
-  <button @click="showDeleted = !showDeleted">
+  <button class="btn" @click="showDeleted = !showDeleted">
     to deleted
   </button>
 
   <input 
     type="text" placeholder="New item" 
-    :class="invalid === '' ? 'error' : ''"
+    :class="{'error': isInvalid}"
     v-model="task"
     @keyup.enter="addTask">
 
   <button @click="addTask">
     Add
   </button>
-
-  <br>
-
-  <ul class="list">
+  <ul >
     <a-item-task 
       v-for="(text, index) in taskList" :key="index"
       :text="text"
@@ -24,20 +21,23 @@
   </ul>
 </div>
 
-<a-deleted v-if="showDeleted" :deletedTaskList="deletedTaskList"/>
-
+<a-deleted class="del-list" v-if="showDeleted" :deletedTaskList="deletedTaskList"/>
+<a-my-data/>
 </template>
 
 <script>
 import AItemTask from './a-item-task.vue'
 import ADeleted from './a-deleted.vue'
+import AmyData from './a-my-data.vue'
+
 
 export default {
   name: 'a-main',
 
   components: {
     AItemTask,
-    ADeleted
+    ADeleted,
+    AmyData
   },
   data() {
     return {
@@ -45,7 +45,7 @@ export default {
       deletedTaskList: [],
       taskList: [],
       task: '',
-      invalid: ''
+      isInvalid: false
     }
   },
   methods: {
@@ -53,6 +53,9 @@ export default {
       if(this.task !== '') {
         this.taskList.push(this.task);
         this.task= '';
+        this.isInvalid= false
+      }else {
+        this.isInvalid= true
       }     
     },
     removeTask: function(index) {
@@ -78,5 +81,15 @@ export default {
 .error {
   background-color: rgb(255, 89, 89);
   color: #fff;
-}       
+}
+
+.btn {
+  padding: 8px 16px !important;
+  display: inline-block;
+  margin: 5px;
+  border: none;
+  background-color: rgb(175, 175, 253);
+  border-radius: 3px;
+}
+
 </style>
