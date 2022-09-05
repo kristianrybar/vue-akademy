@@ -22,13 +22,13 @@
 </div>
 
 <a-deleted class="del-list" v-if="showDeleted" :deletedTaskList="deletedTaskList"/>
-<a-my-data/>
+<a-my-data class="myData"/>
 </template>
 
 <script>
 import AItemTask from './a-item-task.vue'
 import ADeleted from './a-deleted.vue'
-import AmyData from './a-my-data.vue'
+import AMyData from './a-my-data.vue'
 
 
 export default {
@@ -37,7 +37,7 @@ export default {
   components: {
     AItemTask,
     ADeleted,
-    AmyData
+    AMyData
   },
   data() {
     return {
@@ -51,8 +51,8 @@ export default {
   methods: {
     addTask: function() {
       if(this.task !== '') {
-        this.taskList.push(this.task);
-        this.task= '';
+        this.taskList.push(this.task)
+        this.task= ''
         this.isInvalid= false
       }else {
         this.isInvalid= true
@@ -61,7 +61,7 @@ export default {
     removeTask: function(index) {
             this.deletedTaskList.push(this.taskList[index])
             this.taskList.splice(index, 1)
-        }
+    }
   },
 }
 
@@ -90,6 +90,15 @@ export default {
   border: none;
   background-color: rgb(175, 175, 253);
   border-radius: 3px;
+}
+
+.myData {
+  margin: 0 auto;
+  max-width: 500px;
+  background-color: rgb(255, 213, 124);
+  padding: 10px;
+  margin-top: 20px;
+  border: 3px solid rgb(184, 146, 41);
 }
 
 </style>
