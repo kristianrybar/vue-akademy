@@ -43,7 +43,6 @@ export default {
     return {
       showDeleted: false,
       deletedTaskList: [],
-      taskList: [],
       task: '',
       isInvalid: false
     }
@@ -51,18 +50,25 @@ export default {
   methods: {
     addTask: function() {
       if(this.task !== '') {
-        this.taskList.push(this.task)
+        //this.taskList.push(this.task)
+        this.$store.commit('addTask', this.task)
         this.task= ''
         this.isInvalid= false
       }else {
         this.isInvalid= true
-      }     
+      }
+      console.log(this.taskList)     
     },
     removeTask: function(index) {
-            this.deletedTaskList.push(this.taskList[index])
-            this.taskList.splice(index, 1)
+      this.deletedTaskList.push(this.taskList[index])
+      this.taskList.splice(index, 1)
     }
   },
+  computed: {
+    taskList() {
+      return this.$store.getters.getTaskList
+    }
+  }
 }
 
 </script>
@@ -100,5 +106,4 @@ export default {
   margin-top: 20px;
   border: 3px solid rgb(184, 146, 41);
 }
-
 </style>

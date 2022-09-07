@@ -10,7 +10,8 @@
             aria-label="Add a new Data"
             placeholder="Add a new Data"/>
         <ul>
-            <li v-for="data in myData" :key="data.id"
+            <li 
+                v-for="data in myData" :key="data.id"
                 v-if="!isLoading">
                 {{ data.name }}
             </li>

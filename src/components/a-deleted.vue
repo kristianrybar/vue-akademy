@@ -17,7 +17,6 @@ export default {
     border-radius: 3px;
     padding: 5px;
     list-style: none;
-    
     max-width: 350px;
     margin: 0 auto;
     margin-bottom: 3px;

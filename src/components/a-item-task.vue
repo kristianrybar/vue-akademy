@@ -1,12 +1,12 @@
 <template>
-    <li class="item-task">
-      {{ text }}
-      <button
+  <li class="item-task">
+    {{ text }}
+    <button
       class="del-btn" 
-        @click="$emit('removeTask')">
-        DELETE
-      </button>
-    </li>
+      @click="$emit('removeTask')">
+      DELETE
+    </button>
+  </li>
 </template>
 
 <script>
