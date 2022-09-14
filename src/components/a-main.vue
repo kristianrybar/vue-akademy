@@ -1,67 +1,54 @@
 <template>
-<div class="container">
-  <button class="btn" @click="showDeleted = !showDeleted">
-    to deleted
-  </button>
+  <div class="container">
+    <button class="btn" @click="showDeleted = !showDeleted">
+      Show Deleted Tasks
+    </button>
 
-  <input 
-    type="text" placeholder="New item" 
-    :class="{'error': isInvalid}"
-    v-model="task"
-    @keyup.enter="addTask">
+    <a-add-item @addTask="addTask"/>
 
-  <button @click="addTask">
-    Add
-  </button>
-  <ul >
-    <a-item-task 
-      v-for="(text, index) in taskList" :key="index"
-      :text="text"
-      @removeTask="removeTask(index)"/>
-  </ul>
-</div>
+    <ul>
+      <a-item-task 
+        v-for="(text, index) in taskList" :key="index"
+        :text="text"
+        @removeTask="removeTask(index)"/>
+    </ul>
+  </div>
 
-<a-deleted class="del-list" v-if="showDeleted" :deletedTaskList="deletedTaskList"/>
-<a-my-data class="myData"/>
+  <a-deleted class="del-list" v-if="showDeleted" :deletedTaskList="deletedTaskList"/>
+
+  <a-my-data class="myData"/>
 </template>
 
 <script>
+import AAddItem from './a-add-item.vue'
 import AItemTask from './a-item-task.vue'
 import ADeleted from './a-deleted.vue'
 import AMyData from './a-my-data.vue'
 
-
 export default {
   name: 'a-main',
-
   components: {
     AItemTask,
     ADeleted,
-    AMyData
+    AMyData,
+    AAddItem
   },
   data() {
     return {
       showDeleted: false,
       deletedTaskList: [],
-      task: '',
       isInvalid: false
     }
   },
   methods: {
-    addTask: function() {
-      if(this.task !== '') {
-        //this.taskList.push(this.task)
-        this.$store.commit('addTask', this.task)
-        this.task= ''
-        this.isInvalid= false
-      }else {
-        this.isInvalid= true
-      }
-      console.log(this.taskList)     
-    },
     removeTask: function(index) {
       this.deletedTaskList.push(this.taskList[index])
       this.taskList.splice(index, 1)
+    },
+    addTask: function(task) {
+      if(task !== '') {
+        this.$store.commit('addTask', task) //this.taskList.push(this.task)    
+      }
     }
   },
   computed: {
@@ -70,23 +57,19 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>
+
 .container {
   width: 500px;
   padding: 20px;
   border: solid 2px gray;
-  margin: 200px auto 0 auto;
+  margin: 30px auto 0 auto;
 }
 
 .container input, .container button {
   padding: 5px 10px;
-}
-.error {
-  background-color: rgb(255, 89, 89);
-  color: #fff;
 }
 
 .btn {
@@ -96,6 +79,10 @@ export default {
   border: none;
   background-color: rgb(175, 175, 253);
   border-radius: 3px;
+}
+
+.btn:hover {
+  border: 1px solid ;
 }
 
 .myData {

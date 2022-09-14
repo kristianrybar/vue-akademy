@@ -1,9 +1,15 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-    state () {
+    state() {
         return {
-            taskList: []
+            taskList: [],
+            
+        }
+    },
+    getters: {
+        getTaskList(state) {
+            return state.taskList
         }
     },
     mutations: {
@@ -11,11 +17,6 @@ export default createStore({
             state.taskList.push(task)
         }
     },
-    getters: {
-        getTaskList(state) {
-            return state.taskList
-        }
-    }
 })
 
 

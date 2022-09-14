@@ -11,12 +11,13 @@
 
 <script>
 export default {
-    name: 'a-task',
-    props: ['text'],
+  name: 'a-task',
+  props: ['text'],
 }
 </script>
 
 <style scoped>
+  
 .item-task {
   border: 1px solid gray;
   padding: 6px;

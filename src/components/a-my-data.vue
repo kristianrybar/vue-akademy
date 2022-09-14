@@ -9,22 +9,20 @@
             @keyup.enter="addData"
             aria-label="Add a new Data"
             placeholder="Add a new Data"/>
-        <ul>
-            <li 
-                v-for="data in myData" :key="data.id"
-                v-if="!isLoading">
+        <ul v-if="!isLoading">
+            <li v-for="data in myData" :key="data.id" >         
                 {{ data.name }}
-            </li>
-            <div v-else class="spinner-border" role="status">
-                <span class="sr-only"></span>
-            </div>
+            </li>    
         </ul>
+        <div v-else class="spinner-border" role="status">
+            <span class="sr-only"></span>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
-const baseURL = 'http://localhost:3001/myData'
+
 export default {
     name:'a-my-data',
     data() {
@@ -35,9 +33,9 @@ export default {
         }
     },
     async created() {
-        this.isLoading= true
+        this.isLoading = true
         try {
-            const res = await axios.get(baseURL)
+            const res = await axios.get('http://localhost:3001/myData')
             this.myData = res.data
             this.dataName = ''
         }
@@ -49,7 +47,7 @@ export default {
     methods: {
         async addData() {
             try {
-                const res = await axios.post(baseURL, { name: this.dataName })
+                const res = await axios.post('http://localhost:3001/myData', { name: this.dataName })
                 this.myData.push(res.data)
                 this.dataName = ''
             }
