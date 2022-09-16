@@ -10,50 +10,54 @@
       <a-item-task 
         v-for="(text, index) in taskList" :key="index"
         :text="text"
-        @removeTask="removeTask(index)"/>
+        @removeTask="removeTask(text, index)"/>
     </ul>
   </div>
 
-  <a-deleted class="del-list" v-if="showDeleted" :deletedTaskList="deletedTaskList"/>
+  <a-deleted
+    class="del-list" v-if="showDeleted" 
+    @backToTaskList="backToTaskList"/>
 
-  <a-my-data class="myData"/>
 </template>
 
 <script>
 import AAddItem from './a-add-item.vue'
 import AItemTask from './a-item-task.vue'
 import ADeleted from './a-deleted.vue'
-import AMyData from './a-my-data.vue'
+import { mapActions, mapGetters } from 'vuex' 
 
 export default {
   name: 'a-main',
   components: {
     AItemTask,
     ADeleted,
-    AMyData,
     AAddItem
   },
   data() {
     return {
       showDeleted: false,
-      deletedTaskList: [],
       isInvalid: false
     }
   },
   methods: {
-    removeTask: function(index) {
-      this.deletedTaskList.push(this.taskList[index])
-      this.taskList.splice(index, 1)
+    ...mapActions(['addData', 'deleteTask']),
+    removeTask(task, index) {
+      this.deleteTask(task, index)
+
     },
-    addTask: function(task) {
+    addTask(task) {
       if(task !== '') {
-        this.$store.commit('addTask', task) //this.taskList.push(this.task)    
+       this.addData(task)
       }
+    },
+    backToTaskList(task) {
+      this.taskList.push(task)
     }
   },
   computed: {
+    ...mapGetters(['getTaskList']),
     taskList() {
-      return this.$store.getters.getTaskList
+      return this.getTaskList
     }
   }
 }

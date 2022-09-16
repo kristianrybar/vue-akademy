@@ -1,16 +1,31 @@
 <template>
     <ul class="del-items">
         Deleted Tasks
-        <li class="deleted-item" v-for="task in deletedTaskList" :key="task">
-            {{ task }}
+        <li class="deleted-item" v-for="(task, index) in getDeletedTaskList" :key="task">
+            <div>
+               {{ task }} 
+            </div>
+            <button @click="removeDeletedTask(index, task)">
+                 Back To TaskList
+            </button>
         </li>
     </ul>
 </template>
 
 <script>
+import { mapGetters } from 'vuex' 
 export default {
     name: 'a-deleted',
-    props: ['deletedTaskList']
+    methods: {
+        removeDeletedTask(index, task) {
+            this.$emit('backToTaskList', task)
+            this.deletedTaskList.splice(index, 1)
+        }
+    },
+    computed: {
+        ...mapGetters(['getDeletedTaskList'])
+
+    }
 }
 </script>
 
@@ -20,10 +35,13 @@ export default {
     border-radius: 3px;
     padding: 5px;
     list-style: none;
-    max-width: 350px;
+    max-width: 380px;
     margin: 0 auto;
     margin-bottom: 3px;
     background: white;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .del-items {
@@ -35,5 +53,8 @@ export default {
     margin-left: auto;
     margin-right: auto;
     background: rgb(238, 239, 255);
+    display: flex;
+    flex-direction: column;
+    
 }
 </style>
