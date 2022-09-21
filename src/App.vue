@@ -3,12 +3,8 @@
 </template>
 
 <script>
-import AMain from './components/a-main.vue'
-
 export default {
-    components: {
-        AMain
-    }
+    name: 'app'
 }
 </script>
 

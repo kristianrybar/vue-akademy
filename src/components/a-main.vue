@@ -6,17 +6,23 @@
 
     <a-add-item @addTask="addTask"/>
 
+    <div class="count">
+      <p>COUNT</p>
+      <p> {{ countTaskList }} </p>
+    </div>
+    
     <ul>
+      taskList
       <a-item-task 
         v-for="(text, index) in taskList" :key="index"
+        :id="index"
         :text="text"
         @removeTask="removeTask(text, index)"/>
     </ul>
   </div>
 
   <a-deleted
-    class="del-list" v-if="showDeleted" 
-    @backToTaskList="backToTaskList"/>
+    class="del-list" v-if="showDeleted" />
 
 </template>
 
@@ -36,28 +42,31 @@ export default {
   data() {
     return {
       showDeleted: false,
-      isInvalid: false
+      isInvalid: false,
     }
   },
   methods: {
     ...mapActions(['addData', 'deleteTask']),
     removeTask(task, index) {
-      this.deleteTask(task, index)
-
+      this.deleteTask({task, index})
     },
     addTask(task) {
       if(task !== '') {
        this.addData(task)
+       console.log(addTask)
       }
     },
-    backToTaskList(task) {
-      this.taskList.push(task)
-    }
+    //backToTaskList(task) {
+    //  this.taskList.push(task)
+    //},
   },
   computed: {
     ...mapGetters(['getTaskList']),
     taskList() {
       return this.getTaskList
+    },
+    countTaskList() {
+      return this.taskList.length
     }
   }
 }
@@ -70,6 +79,7 @@ export default {
   padding: 20px;
   border: solid 2px gray;
   margin: 30px auto 0 auto;
+  border-radius: 3px;
 }
 
 .container input, .container button {
@@ -79,7 +89,7 @@ export default {
 .btn {
   padding: 8px 16px !important;
   display: inline-block;
-  margin: 5px;
+  margin-right: 5px;
   border: none;
   background-color: rgb(175, 175, 253);
   border-radius: 3px;
@@ -97,4 +107,23 @@ export default {
   margin-top: 20px;
   border: 3px solid rgb(184, 146, 41);
 }
+
+.count {
+  border: 2px solid black;
+  width: 50px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 3px;
+  margin: 10px 0;
+  font-size: 11px;
+}
+.count p {
+  margin: 0;
+}
+
+.count p:nth-child(2) {
+  font-size: 18px;
+}
 </style>
+
+

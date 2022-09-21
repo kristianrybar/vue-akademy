@@ -4,7 +4,7 @@
         :class="{'error': isInvalid}"
         v-model="task"
         @keyup.enter="addNewTask(task)">
-
+        
     <button @click="addNewTask(task)">
         Add Task
     </button>

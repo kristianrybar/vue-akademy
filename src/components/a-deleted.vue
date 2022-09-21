@@ -13,18 +13,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex' 
+import { mapActions, mapGetters } from 'vuex' 
 export default {
     name: 'a-deleted',
     methods: {
+        ...mapActions(['backToTaskList']),
         removeDeletedTask(index, task) {
-            this.$emit('backToTaskList', task)
-            this.deletedTaskList.splice(index, 1)
+            this.backToTaskList({index, task})
         }
     },
     computed: {
-        ...mapGetters(['getDeletedTaskList'])
-
+        ...mapGetters(['getDeletedTaskList']),
+        deletedTaskList() {
+            return this.getDeletedTaskList
+        },
     }
 }
 </script>
@@ -54,7 +56,6 @@ export default {
     margin-right: auto;
     background: rgb(238, 239, 255);
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column;  
 }
 </style>
