@@ -24,6 +24,10 @@ export default createStore({
         },
         backToTaskList({commit}, {task, index}) {
             commit('backToTaskList', {task, index})
+        },
+        editTask({commit}, text, index) {
+            console.log('test', text, index)
+            commit('editTask', {text, index})
         }
     },
     mutations: {
@@ -37,7 +41,10 @@ export default createStore({
         backToTaskList(state, {task, index}) {
             state.deletedTaskList.splice(index, 1) 
             state.taskList.push(task)
-        }        
+        },
+        editTask(state, {text, index}) {
+            state.taskList[index] = text
+        }       
     },
 })
 

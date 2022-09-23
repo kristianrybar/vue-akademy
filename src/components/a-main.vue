@@ -22,7 +22,7 @@
   </div>
 
   <a-deleted
-    class="del-list" v-if="showDeleted" />
+    class="del-list" v-if="showDeleted"/>
 
 </template>
 
@@ -53,12 +53,8 @@ export default {
     addTask(task) {
       if(task !== '') {
        this.addData(task)
-       console.log(addTask)
       }
     },
-    //backToTaskList(task) {
-    //  this.taskList.push(task)
-    //},
   },
   computed: {
     ...mapGetters(['getTaskList']),
@@ -68,6 +64,9 @@ export default {
     countTaskList() {
       return this.taskList.length
     }
+  },
+  mounted() {
+    console.log(this.taskList)
   }
 }
 </script>
@@ -75,7 +74,7 @@ export default {
 <style scoped>
 
 .container {
-  width: 500px;
+  max-width: 500px;
   padding: 20px;
   border: solid 2px gray;
   margin: 30px auto 0 auto;
